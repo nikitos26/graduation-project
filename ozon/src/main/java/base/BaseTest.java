@@ -1,27 +1,19 @@
 package base;
 
-import org.testng.annotations.AfterTest;
-import org.testng.annotations.BeforeTest;
+import com.codeborne.selenide.Configuration;
+import org.testng.annotations.Listeners;
+import utils.listener.Listener;
 
-import static driver.Driver.createDriver;
-import static driver.Driver.quitDriver;
-import static driver.DriverTypes.CHROME;
-import static driver.DriverTypes.valueOf;
-import static utils.propertios.PropertyReader.getProperties;
+import static com.codeborne.selenide.Selenide.open;
+import static com.codeborne.selenide.Selenide.page;
+import static com.codeborne.selenide.WebDriverRunner.driver;
 
-
+@Listeners(Listener.class)
 public class BaseTest {
-
-    @BeforeTest
-    protected void setUp() {
-        createDriver(System.getProperties().containsKey("config")
-                ? valueOf(getProperties().getProperty("browser").toUpperCase())
-                : CHROME
-        );
-    }
-
-    @AfterTest(alwaysRun = true)
-    protected void tearDown() {
-        quitDriver();
+    protected <T> T get(Class<T> classPage) {
+        if (driver().hasWebDriverStarted()) {
+            return page(classPage);
+        }
+        return open(Configuration.baseUrl, classPage);
     }
 }
