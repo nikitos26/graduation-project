@@ -1,5 +1,5 @@
 package driver;
 
 public enum DriverTypes {
-    CHROME, FIREFOX, IE
+    CHROME, FIREFOX, EDGE
 }

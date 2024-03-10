@@ -44,7 +44,7 @@ public class Driver {
                     FirefoxOptions firefoxOptions = new FirefoxOptions();
                     webDriver.set(new FirefoxDriver(firefoxOptions));
                     break;
-                case IE:
+                case EDGE:
                     EdgeOptions edgeOptions = new EdgeOptions();
                     webDriver.set(new EdgeDriver(edgeOptions));
             }
