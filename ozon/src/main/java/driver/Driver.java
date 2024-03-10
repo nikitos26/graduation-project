@@ -29,7 +29,7 @@ public class Driver {
     }
 
     public static void createDriver(DriverTypes type) {
-        if (webDriver.get() != null) {
+        if (webDriver.get() == null) {
             switch (type) {
                 case CHROME:
                     ChromeOptions options = new ChromeOptions();
