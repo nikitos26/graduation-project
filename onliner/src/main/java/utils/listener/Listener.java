@@ -1,10 +1,13 @@
 package utils.listener;
 
+import com.codeborne.selenide.Configuration;
 import lombok.extern.log4j.Log4j;
+import org.openqa.selenium.chrome.ChromeOptions;
 import org.testng.ITestContext;
 import org.testng.ITestListener;
 
 import static com.codeborne.selenide.Configuration.*;
+import static com.codeborne.selenide.Configuration.browser;
 import static utils.logs.Logs.clearLogDirectory;
 import static utils.propertios.PropertyReader.getProperties;
 import static utils.propertios.PropertyReader.setUpProperties;
@@ -26,8 +29,20 @@ public class Listener implements ITestListener {
     }
 
     public void setUpSelenideConfiguration() {
-        baseUrl = getProperties().getProperty("baseUrl");
+        baseUrl = getProperties().getProperty("url");
         headless = Boolean.parseBoolean(getProperties().getProperty("headless"));
         timeout = Long.parseLong(getProperties().getProperty("timeout"));
+        browser = getProperties().getProperty("browser");
+        pageLoadTimeout = Long.parseLong(getProperties().getProperty("timeout_loading_page"));
+        setOptions();
+    }
+
+    public void setOptions() {
+        ChromeOptions options = new ChromeOptions();
+        options.addArguments("disable-dev-shm-usage");
+        options.addArguments("no-sandbox");
+        options.addArguments("disable-extensions");
+        options.addArguments("disable-cookies");
+        Configuration.browserCapabilities = options;
     }
 }
