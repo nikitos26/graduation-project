@@ -4,20 +4,21 @@ import com.codeborne.selenide.SelenideElement;
 import lombok.extern.log4j.Log4j;
 
 import static com.codeborne.selenide.Condition.exist;
-import static com.codeborne.selenide.Condition.visible;
-import static com.codeborne.selenide.Selectors.byClassName;
-import static com.codeborne.selenide.Selectors.byText;
+import static com.codeborne.selenide.Selectors.*;
+import static com.codeborne.selenide.Selectors.byCssSelector;
 import static com.codeborne.selenide.Selenide.$;
 
 @Log4j
 public class DeliveryPopup {
-    private final SelenideElement popup = $(byClassName("auth-popup auth-popup_primary auth-popup_middle"));
-    private final SelenideElement closeButton = popup.$(byClassName("auth-popup__close"));
-    private final SelenideElement inputField = popup.$(byClassName("auth-input auth-input_primary"));
-    private final SelenideElement changeButton = popup.$(byClassName("auth-button"));
-    private final SelenideElement dropdownList = popup.$(byClassName("auth-dropdown"));
+    private final SelenideElement popup = $(byCssSelector(".auth-popup.auth-popup_primary.auth-popup_middle"));
+    private final SelenideElement closeButton = popup.$(byCssSelector(".auth-popup__close"));
+    private final SelenideElement inputField = popup.$(byCssSelector(".auth-input.auth-input_primary"));
+    private final SelenideElement changeButton = popup.$(byCssSelector(".auth-button"));
+    private final SelenideElement dropdownList = popup.$(byCssSelector(".auth-dropdown"));
+    private final SelenideElement dropdownListLoadingCircle = popup.$(byCssSelector(".auth-dropdown.auth-dropdown_animated"));
 
     public DeliveryPopup verifyPopup() {
+        this.popup.shouldBe(exist);
         this.closeButton.shouldBe(exist);
         this.changeButton.shouldBe(exist);
         log.info("Verify delivery popup complete");
@@ -32,7 +33,7 @@ public class DeliveryPopup {
 
     public DeliveryPopup inputLocation(String location) {
         log.info("Input location");
-        this.inputField.sendKeys(location);
+        this.inputField.shouldBe(exist).sendKeys(location);
         return this;
     }
 
@@ -43,7 +44,8 @@ public class DeliveryPopup {
     }
 
     public DeliveryPopup findLocationInDropdownList(String location) {
-        this.dropdownList.shouldBe(visible);
+        this.dropdownList.shouldBe(exist);
+        this.dropdownListLoadingCircle.shouldNotBe(exist);
         SelenideElement locationInList = dropdownList.$(byText(location));
         log.info("Search location in dropdown list");
         if (locationInList.isDisplayed()) {

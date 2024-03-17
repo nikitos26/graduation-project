@@ -1,8 +1,17 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
 <suite name="Smoke Test">
-    <test name="Onliner.by">
+    <test name="Onliner">
         <parameter name="product" value="Iphone 14"/>
+        <parameter name="delivery_location" value="Гродно"/>
+        <parameter name="street" value="ул. Парковая"/>
+        <parameter name="building" value="14"/>
+        <parameter name="apartment" value="21"/>
+        <parameter name="entrance" value="3"/>
+        <parameter name="stair" value="2"/>
+        <parameter name="name" value="Ivan"/>
+        <parameter name="surname" value="Ivanov"/>
+        <parameter name="mail" value="ivanov_ivan@gmail.com"/>
         <classes>
             <class name="smokeTest.SmokeTest"/>
         </classes>
