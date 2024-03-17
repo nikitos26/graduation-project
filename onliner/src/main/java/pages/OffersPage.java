@@ -52,7 +52,7 @@ public class OffersPage extends ProductPage {
 
 
         this.offersList.shouldHave(sizeGreaterThan(0));
-        ;
+
         for (SelenideElement offer : this.offersList) {
 
             String offerPriceStr = offer.$(byCssSelector(".offers-list__description_nodecor")).getText();
@@ -95,5 +95,11 @@ public class OffersPage extends ProductPage {
         }
         return this;
     }
+
+    public OffersPage closePrivacyPopup(){
+        super.closePrivacyPopup();
+        return this;
+    }
+
 
 }

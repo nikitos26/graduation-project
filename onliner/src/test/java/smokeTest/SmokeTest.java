@@ -83,7 +83,8 @@ public class SmokeTest extends BaseTest {
                 .inputMail(mail)
                 .verifyProductName(product)
                 .verifyProductPrice(this.productPrice)
+                .verifyInfoMessageDoesntExist()
                 .clickPayButton()
-                .verifyInfoMessage();
+                .verifyInfoMessageAppear();
     }
 }

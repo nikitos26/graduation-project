@@ -134,11 +134,16 @@ public class PlacingOrderPage {
         return this;
     }
 
-    public PlacingOrderPage verifyInfoMessage() {
-        log.info("Verify info tooltip");
+    public PlacingOrderPage verifyInfoMessageAppear() {
+        log.info("Verify info tooltip appear");
         this.infoMessage.shouldBe(exist);
         return this;
     }
 
+    public PlacingOrderPage verifyInfoMessageDoesntExist() {
+        log.info("Verify info doesnt exist");
+        this.infoMessage.shouldNotBe(exist);
+        return this;
+    }
 
 }

@@ -3,12 +3,17 @@ package pages;
 import com.codeborne.selenide.ElementsCollection;
 import com.codeborne.selenide.SelenideElement;
 import lombok.extern.log4j.Log4j;
+import org.openqa.selenium.Keys;
 import org.testng.Assert;
 
+import java.util.regex.Pattern;
+
 import static com.codeborne.selenide.CollectionCondition.sizeGreaterThan;
+import static com.codeborne.selenide.Condition.exist;
 import static com.codeborne.selenide.Condition.text;
 import static com.codeborne.selenide.Selectors.*;
 import static com.codeborne.selenide.Selenide.$;
+import static com.codeborne.selenide.Selenide.executeJavaScript;
 
 @Log4j
 public class CartPage {
@@ -16,6 +21,7 @@ public class CartPage {
     private final SelenideElement pageTitle = page.$(byCssSelector(".cart-form__title"));
     private final SelenideElement productPanel = page.$(byCssSelector(".cart-form__offers-list"));
     private final ElementsCollection products = productPanel.$$(byCssSelector(".cart-form__offers-unit_primary"));
+    private final SelenideElement inputField = $(byCssSelector(".cart-form__input_nonadaptive"));
     private Integer productPrice = 0;
 
     public CartPage verifyCartPage() {
@@ -85,6 +91,65 @@ public class CartPage {
 
     public Integer getPrice() {
         return this.productPrice;
+    }
+
+    public CartPage inputTextInField(String text) {
+        executeJavaScript("arguments[0].select();", inputField);
+        this.inputField.sendKeys(Keys.BACK_SPACE);
+        this.inputField.shouldBe(exist).sendKeys(text);
+
+
+        return this;
+    }
+
+    public CartPage clickOnPrice() {
+        this.pageTitle.shouldBe(exist).click();
+        return this;
+    }
+
+    public CartPage verifyProductValue(String value) {
+        Pattern patternChars = Pattern.compile("^[\\sA-zА-я.,!@#$%^&*()_+§±`'\"\\n-]+$");
+        boolean isSymbolsAndChars = patternChars.matcher(value).matches();
+
+        Pattern patternDigits = Pattern.compile("^[0-9]+$");
+        boolean isDigits = patternDigits.matcher(value).matches();
+
+        log.info(value + " matches is " + isSymbolsAndChars);
+        log.info("value in field " + this.inputField.getValue());
+
+        int valueInField = Integer.parseInt(this.inputField.getValue());
+
+
+        if (isSymbolsAndChars) {
+            Assert.assertTrue(valueInField == 1,
+                    "Char or zero doesnt transform to 1");
+            return this;
+        }
+
+        if (isDigits) {
+            int valueInt = Integer.parseInt(value);
+
+            if (valueInt > 99) {
+                Assert.assertTrue(valueInField == 99,
+                        "Value in field must be 99");
+                return this;
+            }
+
+            if (valueInt <= 0) {
+                Assert.assertTrue(valueInField == 1,
+                        "Value in field must be 1");
+                return this;
+            }
+
+
+            if (1 <= valueInt && valueInt <= 99) {
+                Assert.assertTrue(valueInField == valueInt,
+                        "User value doesnt equal value in field");
+                return this;
+            }
+        }
+        log.info("Value doesnt match");
+        return this;
     }
 
 }
