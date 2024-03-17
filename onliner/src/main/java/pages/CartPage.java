@@ -8,12 +8,12 @@ import org.testng.Assert;
 
 import java.util.regex.Pattern;
 
-import static com.codeborne.selenide.CollectionCondition.sizeGreaterThan;
+import static com.codeborne.selenide.CollectionCondition.*;
 import static com.codeborne.selenide.Condition.exist;
 import static com.codeborne.selenide.Condition.text;
 import static com.codeborne.selenide.Selectors.*;
-import static com.codeborne.selenide.Selenide.$;
-import static com.codeborne.selenide.Selenide.executeJavaScript;
+import static com.codeborne.selenide.Selectors.byCssSelector;
+import static com.codeborne.selenide.Selenide.*;
 
 @Log4j
 public class CartPage {
@@ -22,6 +22,8 @@ public class CartPage {
     private final SelenideElement productPanel = page.$(byCssSelector(".cart-form__offers-list"));
     private final ElementsCollection products = productPanel.$$(byCssSelector(".cart-form__offers-unit_primary"));
     private final SelenideElement inputField = $(byCssSelector(".cart-form__input_nonadaptive"));
+    private final SelenideElement removeButton = $(byCssSelector(".cart-form__button_remove"));
+    private final SelenideElement productDescription = $(byCssSelector(".cart-form__description_condensed-extra"));
     private Integer productPrice = 0;
 
     public CartPage verifyCartPage() {
@@ -151,5 +153,25 @@ public class CartPage {
         log.info("Value doesnt match");
         return this;
     }
+
+    public CartPage validateAmountProducts(Integer size) {
+        this.products.shouldHave(size(size));
+        return this;
+    }
+
+    public CartPage validateRemovedProduct() {
+        log.info(this.productDescription.getText().toLowerCase());
+        Assert.assertTrue(this.productDescription.getText().toLowerCase().contains("вы удалили"),
+                "Product wasnt removed");
+        this.inputField.shouldNotBe(exist);
+        return this;
+    }
+
+    public CartPage removeProductFromCart() {
+        actions().moveToElement(this.removeButton).click().perform();
+        return this;
+    }
+
+
 
 }
