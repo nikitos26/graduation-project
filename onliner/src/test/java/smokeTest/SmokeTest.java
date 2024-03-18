@@ -28,8 +28,8 @@ public class SmokeTest extends BaseTest {
     public void openProductPage(String product) {
         String productUrl = get(SearchPopup.class).clickOnProductInResults(product).getProductUrl();
         get(ProductPage.class)
-                .verifyPage()
                 .closePrivacyPopup()
+                .verifyPage()
                 .verifyProductName(product)
                 .verifyPageUrl(productUrl);
     }

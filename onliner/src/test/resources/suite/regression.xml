@@ -1,16 +1,24 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
-<suite name="Regression tests">
-<!--    <test name="Limit Test">-->
-<!--        <classes>-->
-<!--            <class name="limitTes.LimitTest"/>-->
-<!--        </classes>-->
-<!--    </test>-->
+<suite name="Regression tests" parallel="tests" thread-count="3">
+
+    <test name="Limit Test">
+        <classes>
+            <class name="limitTes.LimitTest"/>
+        </classes>
+    </test>
 
     <test name="Cart Test">
         <classes>
             <class name="cartTest.CartTest"/>
         </classes>
-
     </test>
+
+    <parameter name="product" value="Автомобильные шины"/>
+    <test name="Api Test">
+        <classes>
+            <class name="apiTest.ApiTest"/>
+        </classes>
+    </test>
+
 </suite>

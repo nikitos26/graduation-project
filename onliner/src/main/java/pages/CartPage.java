@@ -1,8 +1,12 @@
 package pages;
 
+import com.codeborne.selenide.Condition;
+import com.codeborne.selenide.Configuration;
 import com.codeborne.selenide.ElementsCollection;
 import com.codeborne.selenide.SelenideElement;
 import lombok.extern.log4j.Log4j;
+import org.openqa.selenium.By;
+import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.Keys;
 import org.testng.Assert;
 
@@ -160,7 +164,6 @@ public class CartPage {
     }
 
     public CartPage validateRemovedProduct() {
-        log.info(this.productDescription.getText().toLowerCase());
         Assert.assertTrue(this.productDescription.getText().toLowerCase().contains("вы удалили"),
                 "Product wasnt removed");
         this.inputField.shouldNotBe(exist);
@@ -168,10 +171,16 @@ public class CartPage {
     }
 
     public CartPage removeProductFromCart() {
-        actions().moveToElement(this.removeButton).click().perform();
+        actions().moveToElement(this.removeButton).doubleClick().perform();
+        this.removeButton.click();
         return this;
     }
 
-
+    public CartPage verifyProductDoesntExistInCart() {
+        this.inputField.shouldNotBe(exist);
+        this.productPanel.shouldNotBe(exist);
+        this.productDescription.shouldNotBe(exist);
+        return this;
+    }
 
 }
