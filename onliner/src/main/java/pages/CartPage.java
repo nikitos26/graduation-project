@@ -1,12 +1,8 @@
 package pages;
 
-import com.codeborne.selenide.Condition;
-import com.codeborne.selenide.Configuration;
 import com.codeborne.selenide.ElementsCollection;
 import com.codeborne.selenide.SelenideElement;
 import lombok.extern.log4j.Log4j;
-import org.openqa.selenium.By;
-import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.Keys;
 import org.testng.Assert;
 
@@ -172,7 +168,9 @@ public class CartPage {
 
     public CartPage removeProductFromCart() {
         actions().moveToElement(this.removeButton).doubleClick().perform();
-        this.removeButton.click();
+        if (this.removeButton.exists()){
+            actions().moveToElement(this.removeButton).doubleClick().perform();
+        }
         return this;
     }
 
