@@ -14,7 +14,7 @@
         </classes>
     </test>
 
-    <parameter name="product" value="Автомобильные шины"/>
+    <parameter name="product" value="шины"/>
     <test name="Api Test">
         <classes>
             <class name="apiTest.ApiTest"/>
