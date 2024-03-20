@@ -6,7 +6,6 @@ import org.testng.ITestListener;
 
 import static com.codeborne.selenide.Configuration.*;
 import static com.codeborne.selenide.Configuration.browser;
-import static utils.logs.Logs.clearLogDirectory;
 import static utils.properties.PropertyReader.getProperties;
 import static utils.properties.PropertyReader.setUpProperties;
 
@@ -14,7 +13,6 @@ import static utils.properties.PropertyReader.setUpProperties;
 public class Listener implements ITestListener {
     @Override
     public void onStart(ITestContext context) {
-        clearLogDirectory();
         if (System.getProperties().containsKey("config")) {
             setUpProperties(System.getProperty("config"));
             setUpSelenideConfiguration();
