@@ -13,10 +13,10 @@ pipeline {
         }
         stage('Run Tests') {
             steps {
-                sh 'mvn test -Dsuite=${SUITE} -Dconfig=${CONFIG}'
+                sh 'mvn test -Dsuite=${SUITE} -Dconfig=onliner_chrome'
             }
         }
-        stage('Archive Logs') {
+        stage('Copy Logs') {
             steps {
                 archiveArtifacts artifacts: 'target/logs/*', followSymlinks: false
             }
