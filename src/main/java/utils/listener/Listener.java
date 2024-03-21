@@ -28,6 +28,7 @@ public class Listener implements ITestListener {
         baseUrl = getProperties().getProperty("url");
         browser = getProperties().getProperty("browser");
         headless = Boolean.parseBoolean(getProperties().getProperty("headless"));
+        browserSize = getProperties().getProperty("browserSize");
     }
 
 }
