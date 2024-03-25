@@ -97,13 +97,13 @@ public class CartPage {
 
     public CartPage inputTextInField(String text) {
         executeJavaScript("arguments[0].select();", inputField);
-        sleep(1000);
+        wait(1000);
         this.inputField.sendKeys(Keys.BACK_SPACE);
 
         executeJavaScript("arguments[0].select();", inputField);
-        sleep(1000);
+        wait(1000);
         this.inputField.sendKeys(Keys.BACK_SPACE);
-        
+
         this.inputField.shouldBe(exist).sendKeys(text);
         this.inputField.sendKeys(Keys.ENTER);
 
@@ -187,4 +187,7 @@ public class CartPage {
         return this;
     }
 
+    public void wait(int milliseconds) {
+        sleep(milliseconds);
+    }
 }
