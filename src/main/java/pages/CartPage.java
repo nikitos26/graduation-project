@@ -97,13 +97,8 @@ public class CartPage {
 
     public CartPage inputTextInField(String text) {
         executeJavaScript("arguments[0].select();", inputField);
+        sleep(1000);
         this.inputField.sendKeys(Keys.BACK_SPACE);
-        this.pageTitle.click();
-
-        executeJavaScript("arguments[0].select();", inputField);
-        this.inputField.sendKeys(Keys.BACK_SPACE);
-        this.inputField.sendKeys(Keys.BACK_SPACE);
-        this.inputField.shouldBe(exist).sendKeys(text);
         this.pageTitle.click();
 
         return this;
