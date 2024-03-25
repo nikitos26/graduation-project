@@ -31,9 +31,9 @@ public class ApiTest extends BaseTest {
 
     @Test(priority = 2, description = "Add product in cart")
     public void addProductInCart() {
-        productToAdd.setPosition_id("1689:1037895");
-        productToAdd.setProduct_id(3865328);
-        productToAdd.setProduct_key("tu0922545r1794w");
+        productToAdd.setPosition_id("1689:1038576");
+        productToAdd.setProduct_id(3136002);
+        productToAdd.setProduct_key("u0820555r1694w");
         productToAdd.setQuantity(1);
         productToAdd.setShop_id(1689);
 
