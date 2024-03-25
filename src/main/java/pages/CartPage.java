@@ -99,7 +99,7 @@ public class CartPage {
         executeJavaScript("arguments[0].select();", inputField);
         sleep(1000);
         this.inputField.sendKeys(Keys.BACK_SPACE);
-        this.pageTitle.click();
+        this.inputField.shouldBe(exist).sendKeys(text);
 
         return this;
     }
