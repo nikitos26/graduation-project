@@ -6,10 +6,10 @@ import entities.Positions;
 import io.restassured.response.Response;
 import org.testng.annotations.AfterTest;
 import org.testng.annotations.BeforeTest;
+import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 import pages.CartPage;
 import pages.OffersPage;
-import utils.provider.DataProviderClass;
 
 import static com.codeborne.selenide.Selenide.open;
 import static io.restassured.RestAssured.given;
@@ -28,7 +28,7 @@ public class LimitTest extends BaseTest {
                 .clickOnCart();
     }
 
-    @Test(priority = 1, dataProvider = "Values to limit test", dataProviderClass = DataProviderClass.class)
+    @Test(priority = 1, dataProvider = "Values to limit test")
     public void checkLimits(String text) {
         get(CartPage.class)
                 .verifyCartPage()
@@ -52,5 +52,10 @@ public class LimitTest extends BaseTest {
                 .body(positions)
                 .delete(getProperties().getProperty("baseCartApiUrl") + "cart.api/detached-cart/" + id);
         response.then().statusCode(204);
+    }
+
+    @DataProvider(name = "Values to limit test")
+    public Object[][] getUserNames() {
+        return new Object[][]{{"0"},{" "},{""},{"100"},{"qwerty"},{"!@#"},{"0.1"},{"-10"},{"50"}};
     }
 }
